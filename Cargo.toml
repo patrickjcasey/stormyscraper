@@ -1,0 +1,10 @@
+[package]
+name = "stormyscraper"
+version = "0.1.0"
+authors = ["Patrick Casey <patrick.casey1@outlook.com>"]
+edition = "2021"
+repository = "https://github.com/patrickjcasey/stormyscraper"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
