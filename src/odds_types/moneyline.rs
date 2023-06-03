@@ -22,7 +22,7 @@ impl Moneyline {
         self.away_team_odds = away_team_odds;
         self
     }
-}       
+}
 
 #[cfg(test)]
 mod tests {

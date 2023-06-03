@@ -36,7 +36,7 @@ impl OverUnder {
         self.under_line = under_line;
         self
     }
-}       
+}
 
 #[cfg(test)]
 mod tests {
@@ -44,11 +44,15 @@ mod tests {
     fn over_under_works() {
         use crate::odds_types::over_under::OverUnder;
         let mut over_under = OverUnder::new();
-        assert_eq!(over_under.over_odds, 0); 
+        assert_eq!(over_under.over_odds, 0);
         assert_eq!(over_under.over_line, 0.0);
         assert_eq!(over_under.under_odds, 0);
         assert_eq!(over_under.under_line, 0.0);
-        over_under = over_under.set_over_odds(-100).set_over_line(5.5).set_under_odds(100).set_under_line(5.5);
+        over_under = over_under
+            .set_over_odds(-100)
+            .set_over_line(5.5)
+            .set_under_odds(100)
+            .set_under_line(5.5);
         assert_eq!(over_under.over_odds, -100);
         assert_eq!(over_under.over_line, 5.5);
         assert_eq!(over_under.under_odds, 100);
