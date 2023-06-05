@@ -44,8 +44,8 @@ pub struct MlbGame {
 impl MlbGame {
     pub fn new() -> Self {
         Self {
-            home_team: MlbTeam::BostonRedSox, 
-            away_team: MlbTeam::NewYorkYankees, 
+            home_team: MlbTeam::BostonRedSox,
+            away_team: MlbTeam::NewYorkYankees,
             over_under: OverUnder::new(),
             spread: Spread::new(),
             moneyline: Moneyline::new(),
