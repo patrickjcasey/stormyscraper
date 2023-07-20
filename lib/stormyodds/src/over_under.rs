@@ -1,5 +1,5 @@
-// This file implements the structure of a Moneyline bet
 
+#[derive(Debug, Default, Clone)]
 pub struct OverUnder {
     pub over_odds: i32,
     pub over_line: f32,
@@ -9,12 +9,7 @@ pub struct OverUnder {
 
 impl OverUnder {
     pub fn new() -> Self {
-        Self {
-            over_odds: 0,
-            over_line: 0.0,
-            under_odds: 0,
-            under_line: 0.0,
-        }
+        Self::default()
     }
 
     pub fn set_over_odds(mut self, over_odds: i32) -> Self {
@@ -38,11 +33,12 @@ impl OverUnder {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
+    use super::*; 
     #[test]
     fn over_under_works() {
-        use crate::odds_types::over_under::OverUnder;
         let mut over_under = OverUnder::new();
         assert_eq!(over_under.over_odds, 0);
         assert_eq!(over_under.over_line, 0.0);

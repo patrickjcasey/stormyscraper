@@ -1,0 +1,7 @@
+{
+    "sportsbooks": {
+        "Draftkings": {
+            "mlb": "https://sportsbook.draftkings.com/leagues/baseball/mlb"
+        }
+    }
+}

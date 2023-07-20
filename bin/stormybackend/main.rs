@@ -44,7 +44,7 @@ impl From<ElementRef<'_>> for Entry {
 
 fn main() {
     let endpoints = DraftkingsEndpoints::default();
-    let dk_data = fetch_url(&endpoints.wnba);
+    let dk_data = fetch_url(&endpoints.mlb);
     let fragment = Html::parse_document(&dk_data.unwrap());
     let selector = Selector::parse("tbody.sportsbook-table__body").unwrap();
     // Today's games are stored in the first instance of tbody.sportsbook-table__body

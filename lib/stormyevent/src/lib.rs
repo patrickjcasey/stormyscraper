@@ -1,9 +1,12 @@
-use crate::odds_types::{moneyline::Moneyline, over_under::OverUnder, spread::Spread};
+// This contains all of the logic to deal with MLB teams
+use stormyodds::{Moneyline, OverUnder, Spread};
 
+#[derive(Debug, Default, Clone)]
 pub enum MlbTeam {
     ArizonaDiamondbacks,
     AtlantaBraves,
     BaltimoreOrioles,
+    #[default]
     BostonRedSox,
     ChicagoWhiteSox,
     ChicagoCubs,
@@ -33,7 +36,8 @@ pub enum MlbTeam {
     WashingtonNationals,
 }
 
-pub struct MlbGame {
+#[derive(Debug, Default, Clone)]
+pub struct TeamGame {
     home_team: MlbTeam,
     away_team: MlbTeam,
     over_under: OverUnder,
@@ -41,15 +45,9 @@ pub struct MlbGame {
     moneyline: Moneyline,
 }
 
-impl MlbGame {
+impl TeamGame {
     pub fn new() -> Self {
-        Self {
-            home_team: MlbTeam::BostonRedSox,
-            away_team: MlbTeam::NewYorkYankees,
-            over_under: OverUnder::new(),
-            spread: Spread::new(),
-            moneyline: Moneyline::new(),
-        }
+        Self::default()
     }
 
     pub fn set_home_team(mut self, home_team: MlbTeam) -> Self {

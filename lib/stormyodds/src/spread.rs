@@ -1,5 +1,6 @@
-// This file implements the structure of a Moneyline bet
+// This file contains all of the logic needed to hold Spread for a team game
 
+#[derive(Debug, Default, Clone)]
 pub struct Spread {
     pub home_team_odds: i32,
     pub home_team_line: f32,
@@ -9,12 +10,7 @@ pub struct Spread {
 
 impl Spread {
     pub fn new() -> Self {
-        Self {
-            home_team_odds: 0,
-            home_team_line: 0.0,
-            away_team_odds: 0,
-            away_team_line: 0.0,
-        }
+        Self::default()
     }
 
     pub fn set_home_team_odds(mut self, home_team_odds: i32) -> Self {
@@ -40,9 +36,9 @@ impl Spread {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     #[test]
     fn spread_works() {
-        use crate::odds_types::spread::Spread;
         let mut spread = Spread::new();
         assert_eq!(spread.away_team_odds, 0);
         assert_eq!(spread.away_team_line, 0.0);

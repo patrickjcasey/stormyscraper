@@ -1,12 +1,13 @@
-[package]
-name = "stormyscraper"
-version = "0.1.0"
-authors = ["Patrick Casey <patrick.casey1@outlook.com>"]
-edition = "2021"
-repository = "https://github.com/patrickjcasey/stormyscraper"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+members = [
+    # binaries
+    "bin/stormybackend",
 
-[dependencies]
-reqwest = { version = "0.11.18", features = ["blocking"] }
-scraper = "0.16.0"
+    # libraries
+    "lib/stormyscraper",
+    "lib/stormyodds",
+    "lib/stormyconfig",
+    "lib/stormycore",
+    "lib/stormyevent"
+]
