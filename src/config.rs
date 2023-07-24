@@ -1,6 +1,6 @@
+use crate::{leagues::League, Sportsbook};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use stormycore::{League, Sportsbook};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
@@ -23,7 +23,7 @@ impl Config {
 
 impl Default for Config {
     fn default() -> Self {
-        let config = include_str!("../../../stormyscraper.json");
+        let config = include_str!("../stormyscraper.json");
         serde_json::from_str(config).unwrap()
     }
 }

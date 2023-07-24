@@ -1,13 +1,19 @@
-[workspace]
+[package]
+name = "stormyscraper"
+description = "crate for parsing odds from different oddsmakers"
+version = "0.1.0"
+edition = "2021"
+authors = ["Patrick Casey <patrick.casey1@outlook.com>"]
 
-members = [
-    # binaries
-    "bin/stormybackend",
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-    # libraries
-    "lib/stormyscraper",
-    "lib/stormyodds",
-    "lib/stormyconfig",
-    "lib/stormycore",
-    "lib/stormyevent"
-]
+[dependencies]
+reqwest = { version = "0.11.18", features = ["blocking"] }
+scraper = "0.17.1"
+serde = { version = "1.0.171", features = ["derive"] }
+serde_json = "1.0.103"
+strum = { version = "0.25.0", features = ["derive"] }
+
+[[bin]]
+name = "stormyscraper"
+path = "src/main.rs"

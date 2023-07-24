@@ -1,7 +1,7 @@
-mod spread;
-mod over_under;
 mod moneyline;
+mod over_under;
+mod spread;
 
-pub use spread::Spread;
 pub use moneyline::Moneyline;
 pub use over_under::OverUnder;
+pub use spread::Spread;
