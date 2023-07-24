@@ -1,3 +1,7 @@
-pub mod moneyline;
-pub mod over_under;
-pub mod spread;
+mod moneyline;
+mod over_under;
+mod spread;
+
+pub use moneyline::Moneyline;
+pub use over_under::OverUnder;
+pub use spread::Spread;

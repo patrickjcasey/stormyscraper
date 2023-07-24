@@ -1,39 +1,49 @@
-// This file implements the structure of a Moneyline bet
+use crate::game_types::TeamGameEntry;
 
+#[derive(Clone)]
 pub struct Moneyline {
     pub home_team_odds: i32,
     pub away_team_odds: i32,
 }
 
 impl Moneyline {
-    pub fn new() -> Self {
-        Self {
-            home_team_odds: 0,
-            away_team_odds: 0,
+    pub fn new(home_entry: &TeamGameEntry, away_entry: &TeamGameEntry) -> Option<Self> {
+        match (&home_entry.moneyline, &away_entry.moneyline) {
+            (Some(home_moneyline), Some(away_moneyline)) => Some(Self {
+                home_team_odds: home_moneyline
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+                away_team_odds: away_moneyline
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+            }),
+            _ => None,
         }
     }
 
-    pub fn set_home_team_odds(mut self, home_team_odds: i32) -> Self {
-        self.home_team_odds = home_team_odds;
-        self
+    pub fn home_moneyline_as_string(&self) -> String {
+        format!("{}", self.home_team_odds)
     }
 
-    pub fn set_away_team_odds(mut self, away_team_odds: i32) -> Self {
-        self.away_team_odds = away_team_odds;
-        self
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn moneyline_works() {
-        use crate::odds_types::moneyline::Moneyline;
-        let mut moneyline = Moneyline::new();
-        assert_eq!(moneyline.away_team_odds, 0);
-        assert_eq!(moneyline.home_team_odds, 0);
-        moneyline = moneyline.set_home_team_odds(-100).set_away_team_odds(100);
-        assert_eq!(moneyline.away_team_odds, 100);
-        assert_eq!(moneyline.home_team_odds, -100);
+    pub fn away_moneyline_as_string(&self) -> String {
+        format!("{}", self.away_team_odds)
     }
 }

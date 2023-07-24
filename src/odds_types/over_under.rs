@@ -1,61 +1,79 @@
-// This file implements the structure of a Moneyline bet
+use crate::game_types::TeamGameEntry;
 
+#[derive(Clone)]
 pub struct OverUnder {
     pub over_odds: i32,
-    pub over_line: f32,
     pub under_odds: i32,
+    pub over_line: f32,
     pub under_line: f32,
 }
 
 impl OverUnder {
-    pub fn new() -> Self {
-        Self {
-            over_odds: 0,
-            over_line: 0.0,
-            under_odds: 0,
-            under_line: 0.0,
+    pub fn new(home_entry: &TeamGameEntry, away_entry: &TeamGameEntry) -> Option<Self> {
+        match (
+            &home_entry.over_under_line,
+            &home_entry.over_under_odds,
+            &away_entry.over_under_line,
+            &away_entry.over_under_odds,
+        ) {
+            (Some(over_line), Some(over_odds), Some(under_line), Some(under_odds)) => Some(Self {
+                over_line: over_line
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+                under_line: under_line
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+                over_odds: over_odds
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+                under_odds: under_odds
+                    .chars()
+                    .map(|ch| {
+                        if ch == char::from_u32(0x2212).unwrap() {
+                            '-'
+                        } else {
+                            ch
+                        }
+                    })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+            }),
+            _ => None,
         }
     }
-
-    pub fn set_over_odds(mut self, over_odds: i32) -> Self {
-        self.over_odds = over_odds;
-        self
+    pub fn over_as_string(&self) -> String {
+        format!("O {}  {}", self.over_line, self.over_odds)
     }
 
-    pub fn set_over_line(mut self, over_line: f32) -> Self {
-        self.over_line = over_line;
-        self
-    }
-
-    pub fn set_under_odds(mut self, under_odds: i32) -> Self {
-        self.under_odds = under_odds;
-        self
-    }
-
-    pub fn set_under_line(mut self, under_line: f32) -> Self {
-        self.under_line = under_line;
-        self
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn over_under_works() {
-        use crate::odds_types::over_under::OverUnder;
-        let mut over_under = OverUnder::new();
-        assert_eq!(over_under.over_odds, 0);
-        assert_eq!(over_under.over_line, 0.0);
-        assert_eq!(over_under.under_odds, 0);
-        assert_eq!(over_under.under_line, 0.0);
-        over_under = over_under
-            .set_over_odds(-100)
-            .set_over_line(5.5)
-            .set_under_odds(100)
-            .set_under_line(5.5);
-        assert_eq!(over_under.over_odds, -100);
-        assert_eq!(over_under.over_line, 5.5);
-        assert_eq!(over_under.under_odds, 100);
-        assert_eq!(over_under.under_line, 5.5);
+    pub fn under_as_string(&self) -> String {
+        format!("U {}  {}", self.under_line, self.under_odds)
     }
 }
