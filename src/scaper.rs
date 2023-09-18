@@ -1,9 +1,10 @@
 use crate::game_types::{TeamGame, TeamGameEntry};
-use crate::leagues::{League, LeagueTeam};
+use crate::leagues::League;
 use crate::Config;
 use crate::Sportsbook;
-use scraper::{ElementRef, Html, Selector};
-use std::fmt::Error;
+use reqwest::blocking::ClientBuilder;
+use scraper::{Html, Selector};
+use std::time::Duration;
 
 #[derive(Debug)]
 pub enum ScraperError {
@@ -30,30 +31,32 @@ impl StormyScraper {
         let fragment = Html::parse_document(&data);
         let selector = Selector::parse("tbody.sportsbook-table__body").unwrap();
         // Today's games are stored in the first instance of tbody.sportsbook-table__body
-
-        let todays_games = fragment.select(&selector).next().unwrap();
-
+        let todays_games = fragment.select(&selector).nth(1).unwrap();
         let entry = Selector::parse("tr").unwrap();
 
-        let mut entries: Vec<TeamGameEntry> = vec![];
-        for game in todays_games.select(&entry) {
-            entries.push(TeamGameEntry::extract_entry(league, game).unwrap());
-        }
+        // create a TeamGameEntry for each "tr" in the table
+        let entries: Vec<TeamGameEntry> = todays_games
+            .select(&entry)
+            .into_iter()
+            .map(|x| TeamGameEntry::extract_entry(league, x).unwrap())
+            .collect();
         println!("Completed gathering games!");
         let mut games = vec![];
         for entry in entries.chunks(2) {
             games.push(TeamGame::new(&entry[1], &entry[0]));
         }
+        println!("{}", games.len());
         Ok(games)
     }
 }
 
-fn fetch_url(url: &str) -> Result<String, Error> {
-    match reqwest::blocking::get(url) {
+fn fetch_url(url: &str) -> Result<String, reqwest::Error> {
+    let request = ClientBuilder::new().user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36").timeout(Duration::from_secs(10)).build()?;
+    match request.get(url).send() {
         Ok(response) => Ok(response.text().unwrap()),
-        Err(_) => {
+        Err(e) => {
             eprintln!("Error retrieving: {}", url);
-            Err(Error)
+            Err(e)
         }
     }
 }
