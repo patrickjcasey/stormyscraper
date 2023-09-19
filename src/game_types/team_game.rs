@@ -18,7 +18,6 @@ impl TeamGame {
         Self {
             home_team: home_entry.team,
             away_team: away_entry.team,
-            // TODO
             over_under: OverUnder::new(home_entry, away_entry),
             spread: Spread::new(home_entry, away_entry),
             moneyline: Moneyline::new(home_entry, away_entry),

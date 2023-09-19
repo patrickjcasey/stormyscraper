@@ -1,5 +1,4 @@
 // This file contains all of the logic needed to hold Spread for a team game
-
 use crate::game_types::TeamGameEntry;
 
 #[derive(Clone)]

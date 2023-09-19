@@ -12,7 +12,9 @@ reqwest = { version = "0.11.18", features = ["blocking"] }
 scraper = "0.17.1"
 serde = { version = "1.0.171", features = ["derive"] }
 serde_json = "1.0.103"
+sqlx = { version = "0.7.1", features = ["postgres"] }
 strum = { version = "0.25.0", features = ["derive"] }
+tokio = { version = "1.32.0", features = ["full"] }
 
 [[bin]]
 name = "stormyscraper"

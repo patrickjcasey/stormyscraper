@@ -3,6 +3,7 @@ mod errors;
 pub mod game_types;
 pub mod leagues;
 pub mod odds_types;
+mod runtime;
 mod scaper;
 mod sportsbook;
 
